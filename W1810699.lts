@@ -1,0 +1,58 @@
+// declearing constants
+const MAX_SHEETS = 3
+const MAX_TONER = 3
+
+const NO_SHEETS = 0
+const NO_TONER = 0
+
+const MIN_AMOUNT = 1
+const MAX_AMOUNT = 3
+
+//declearing range
+range AVAILABLE_SHEETS = NO_SHEETS .. MAX_SHEETS
+range AVAILABLE_TONER = NO_TONER .. MAX_TONER
+
+range PRINTING_AMOUNT = MIN_AMOUNT .. MAX_AMOUNT
+
+//Relevant sets
+set PRINT_ACTIONS = {acquirePrint[AVAILABLE_SHEETS][AVAILABLE_TONER], print, acquireRefill, refill, release, passPaperCount[AVAILABLE_SHEETS], passTonerCount[AVAILABLE_TONER]}
+set USERS = {passenger1, passenger2, passenger3, passenger4, toner_technician, paper_technician}
+
+//Ticket Machine Process
+PRINTER(PAPER_COUNT = MAX_SHEETS, TONER_COUNT = MAX_TONER)=
+	PRINTER[PAPER_COUNT][TONER_COUNT],
+	PRINTER[paper:0..PAPER_COUNT][toner : 0..TONER_COUNT] = 
+		if(paper == 0 || toner == 0)
+		then(acquireRefill -> refill -> release -> PRINTER[MAX_SHEETS][toner] 
+		| acquireRefill -> refill -> release -> PRINTER[paper][MAX_TONER])
+		else(acquirePrint[paper][toner] -> print -> release -> passPaperCount[paper -1] -> passTonerCount[toner -1] -> PRINTER[paper -1][toner -1]).
+
+//Paper Technician
+PAPER_TECHNICIAN = 
+	(passPaperCount[paper: AVAILABLE_SHEETS] -> if(paper == 0) 
+	then (acquireRefill -> refill -> release -> PAPER_TECHNICIAN)
+	else(wait -> PAPER_TECHNICIAN) ) + PRINT_ACTIONS.
+
+//Toner Technician
+TONER_TECHNICIAN = 
+	(passTonerCount[toner: AVAILABLE_TONER] -> if(toner == 0) 
+	then (acquireRefill -> refill -> release -> TONER_TECHNICIAN)
+	else(wait -> TONER_TECHNICIAN) ) + PRINT_ACTIONS.
+
+
+//Passanger Process
+PASSENGER(TICKETS = 1) = 
+	PASSENGER[TICKETS], 				//Parameter must be between 1-2
+	PASSENGER[demand: PRINTING_AMOUNT] =		 
+		(acquirePrint[paper: AVAILABLE_SHEETS][toner: AVAILABLE_TONER] -> if(toner >= demand && paper >= demand) 
+		then(print -> release -> PASSENGER)
+		else(wait -> PASSENGER)) + PRINT_ACTIONS.
+
+|| PRINTING_SYSTEM = ( 
+		passenger1 : PASSENGER(2)
+ 	|| 	passenger2 : PASSENGER(1) 
+	|| 	passenger3 : PASSENGER(3) //Representing error if Passenger demands 3 Tickets
+	|| 	passenger4 : PASSENGER(1) 
+	|| 	paper_technician : PAPER_TECHNICIAN 
+	||	toner_technician : TONER_TECHNICIAN 
+ 	|| 	USERS :: PRINTER).

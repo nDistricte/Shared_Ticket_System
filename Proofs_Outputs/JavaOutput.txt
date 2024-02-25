@@ -1,0 +1,100 @@
+run:
+Waiting for paper to be used.
+
+Waiting for toner to be used.
+
+Passenger4 wants to purchase 3  tickets
+Passenger3 wants to purchase 2  tickets
+Passenger2 wants to purchase 3  tickets
+Passenger1 wants to purchase 3  tickets
+
+Passenger4 wants to purchase next.
+
+ SUCCESS
+\\\\\Passenger4////////
+---- Remaining Paper       : 0
+---- Remaining Toner       : 3
+
+
+Ticket Technician acquires the printer for refilling
+Ticket Technician refilled the machine paper to 3
+Waiting for paper to be used.
+
+Waiting for toner to be used.
+
+
+Passenger1 wants to purchase next.
+
+ SUCCESS
+\\\\\Passenger1////////
+---- Remaining Paper       : 0
+---- Remaining Toner       : 0
+
+
+Passenger2
+------- Wanted amount of Ticket: 3
+Available Ticket amount: 0
+Available Toner amount: 0
+System needs to be refilled
+
+
+Passenger3
+------- Wanted amount of Ticket: 2
+Available Ticket amount: 0
+Available Toner amount: 0
+System needs to be refilled
+
+
+Toner Technician acquires the printer for refilling
+Toner Technician refilled the machine toner to 6
+Waiting for toner to be used.
+
+
+Ticket Technician acquires the printer for refilling
+Ticket Technician refilled the machine paper to 3
+Waiting for paper to be used.
+
+Waiting for toner to be used.
+
+
+Passenger3 wants to purchase next.
+
+ SUCCESS
+\\\\\Passenger3////////
+---- Remaining Paper       : 1
+---- Remaining Toner       : 4
+
+
+Passenger2
+------- Wanted amount of Ticket: 3
+Available Ticket amount: 1
+Available Toner amount: 4
+System needs to be refilled
+
+Waiting for toner to be used.
+
+
+Ticket Technician acquires the printer for refilling
+Ticket Technician refilled the machine paper to 3
+Waiting for paper to be used.
+
+
+Passenger2 wants to purchase next.
+
+ SUCCESS
+\\\\\Passenger2////////
+---- Remaining Paper       : 0
+---- Remaining Toner       : 1
+
+
+Ticket Technician acquires the printer for refilling
+Ticket Technician refilled the machine paper to 3
+Waiting for paper to be used.
+
+
+Toner Technician acquires the printer for refilling
+Toner Technician refilled the machine toner to 6
+Waiting for toner to be used.
+
+Waiting for paper to be used.
+
